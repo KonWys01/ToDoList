@@ -1,3 +1,6 @@
 from django.contrib import admin
 
-# Register your models here.
+from to_do_list.models import ToDoCategory, Task
+
+admin.site.register(ToDoCategory)
+admin.site.register(Task)
