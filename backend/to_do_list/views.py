@@ -82,6 +82,12 @@ def list_one_task(request, id: int):
     return JsonResponse(result)
 
 
+def get_tasks_by_category(request, id: int):
+    content = Task.objects.filter(category=id).all()
+    result = {'data': list(content.values())}
+    return JsonResponse(result)
+
+
 def list_to_do_categories(request):
     content = ToDoCategory.objects.all()
     result = {'data': list(content.values())}
