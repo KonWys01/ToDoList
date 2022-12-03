@@ -5,6 +5,7 @@ To Do list.docx
 
 /backend/.idea
 /backend/venv
+/backend/to_do_list/__pycache__/
 
 /database/.idea
 /database/connection_database_dategrip.png
