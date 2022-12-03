@@ -2,6 +2,7 @@ To Do list.docx
 ~WRL0005.tmp
 ~$ Do list.docx
 .idea
+__pycache__
 
 /backend/.idea
 /backend/venv
