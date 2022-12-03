@@ -1,7 +1,11 @@
+import json
 from django.http import JsonResponse
+from django.shortcuts import redirect
 
 from django.views.generic import ListView
 from .models import ToDoCategory, Task
+
+from django.views.decorators.csrf import csrf_exempt
 
 
 class ToDoCategoryListView(ListView):
@@ -11,6 +15,8 @@ class ToDoCategoryListView(ListView):
         context = super().get_context_data(**kwargs)
         context['data'] = ToDoCategory.objects.all()
         return context
+
+
 #
 #
 # class TaskListView(ListView):
@@ -22,13 +28,31 @@ def json_serial(obj):
     from datetime import date, datetime
     if isinstance(obj, (datetime, date)):
         return obj.isoformat()
-    raise TypeError ("Type %s not serializable" % type(obj))
+    raise TypeError("Type %s not serializable" % type(obj))
 
 
 def list_tasks(request):
     content = Task.objects.all()
     result = {'data': list(content.values())}
     return JsonResponse(result)
+
+
+@csrf_exempt
+def create_tasks(request):
+    if request.method == "POST":
+        body_unicode = request.body.decode('utf-8')
+        body = json.loads(body_unicode)
+        name = body['name']
+        description = body['description']
+        category_id = body['category']
+        category = ToDoCategory.objects.get(id=category_id)
+        obj = Task.objects.create(
+            name=name,
+            description=description,
+            category=category
+        )
+        obj.save()
+        return redirect('/tasks')
 
 
 def list_one_task(request, id: int):
