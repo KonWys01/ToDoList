@@ -4,6 +4,7 @@ from .views import (
     list_all,
     list_to_do_categories,
     list_one_to_do_category,
+    create_category,
     list_tasks,
     list_one_task,
     create_tasks,
@@ -13,6 +14,7 @@ from .views import (
 urlpatterns = [
     path('listview', ToDoCategoryListView.as_view()),
     path('list', list_to_do_categories),
+    path('list/create', create_category),
     path('list/<id>', list_one_to_do_category),
     path('tasks', list_tasks),
     path('tasks/create', create_tasks),

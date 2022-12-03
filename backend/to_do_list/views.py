@@ -31,6 +31,12 @@ def json_serial(obj):
     raise TypeError("Type %s not serializable" % type(obj))
 
 
+def get_body_from_post_request(request) -> dict:
+    body_unicode = request.body.decode('utf-8')
+    body = json.loads(body_unicode)
+    return body
+
+
 def list_tasks(request):
     content = Task.objects.all()
     result = {'data': list(content.values())}
@@ -40,8 +46,7 @@ def list_tasks(request):
 @csrf_exempt
 def create_tasks(request):
     if request.method == "POST":
-        body_unicode = request.body.decode('utf-8')
-        body = json.loads(body_unicode)
+        body = get_body_from_post_request(request)
         name = body['name']
         description = body['description']
         category_id = body['category']
@@ -65,6 +70,20 @@ def list_to_do_categories(request):
     content = ToDoCategory.objects.all()
     result = {'data': list(content.values())}
     return JsonResponse(result)
+
+
+@csrf_exempt
+def create_category(request):
+    if request.method == "POST":
+        body = get_body_from_post_request(request)
+        name = body['name']
+        status = body['status']
+        obj = ToDoCategory.objects.create(
+            name=name,
+            status=status
+        )
+        obj.save()
+        return redirect('/list')
 
 
 def list_one_to_do_category(request, id: int):
