@@ -31,7 +31,7 @@ def json_serial(obj):
     raise TypeError("Type %s not serializable" % type(obj))
 
 
-def get_body_from_post_request(request) -> dict:
+def get_body_from_request(request) -> dict:
     body_unicode = request.body.decode('utf-8')
     body = json.loads(body_unicode)
     return body
@@ -46,7 +46,7 @@ def list_tasks(request):
 @csrf_exempt
 def create_tasks(request):
     if request.method == "POST":
-        body = get_body_from_post_request(request)
+        body = get_body_from_request(request)
         name = body['name']
         description = body['description']
         category_id = body['category']
@@ -57,6 +57,22 @@ def create_tasks(request):
             category=category
         )
         obj.save()
+        return redirect('/tasks')
+
+
+@csrf_exempt
+def delete_task(request, id):
+    if request.method == "DELETE":
+        Task.objects.filter(id=id).delete()
+        return redirect('/tasks')
+
+
+@csrf_exempt
+def update_task(request, id):
+    if request.method == "PUT":
+        category = Task.objects.filter(id=id)
+        body = get_body_from_request(request)
+        category.update(**body)
         return redirect('/tasks')
 
 
@@ -75,7 +91,7 @@ def list_to_do_categories(request):
 @csrf_exempt
 def create_category(request):
     if request.method == "POST":
-        body = get_body_from_post_request(request)
+        body = get_body_from_request(request)
         name = body['name']
         status = body['status']
         obj = ToDoCategory.objects.create(
@@ -83,6 +99,22 @@ def create_category(request):
             status=status
         )
         obj.save()
+        return redirect('/list')
+
+
+@csrf_exempt
+def delete_category(request, id):
+    if request.method == "DELETE":
+        ToDoCategory.objects.filter(id=id).delete()
+        return redirect('/list')
+
+
+@csrf_exempt
+def update_category(request, id):
+    if request.method == "PUT":
+        category = ToDoCategory.objects.filter(id=id)
+        body = get_body_from_request(request)
+        category.update(**body)
         return redirect('/list')
 
 
