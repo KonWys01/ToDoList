@@ -5,23 +5,25 @@
         To Do
       </mat-card-title>
     </mat-card-header>
-    <div class="add-task-button" style="text-align: center; margin-top: 10px">
+    <div class="add-task-button" style="text-align: center; margin-top: 10px; margin-bottom: 10px">
       <button mat-mini-fab matTooltip="add new task" class="btn btn-primary">
         <mat-icon>add_circle</mat-icon>
       </button>
     </div>
+    <!--  przeniesc calego ponizszego diva do mat-card-content, w ten sposob powinno sie bedzie dac ustawic domyslny rozmiar okna przerzucania  -->
     <div
+      class="tasks-list"
       cdkDropList
       #toDoList="cdkDropList"
       [cdkDropListData]="testData_to_do.data"
       [cdkDropListConnectedTo]=[doneList]
       (cdkDropListDropped)="drop2($event)">
       <div class="tasks" *ngFor="let task of testData_to_do.data" cdkDrag>
-        <mat-card>
+        <mat-card class="content">
           <mat-card-header>
             <mat-card-title style="color: white">{{task.name}}</mat-card-title>
           </mat-card-header>
-          <mat-card-content class="content">
+          <mat-card-content>
             <p>{{ task.status }}</p>
           </mat-card-content>
         </mat-card>
@@ -35,7 +37,7 @@
         Done
       </mat-card-title>
     </mat-card-header>
-    <div class="add-task-button" style="text-align: center; margin-top: 10px">
+    <div class="add-task-button" style="text-align: center; margin-top: 10px; margin-bottom: 10px">
       <button mat-mini-fab matTooltip="add new task" class="btn btn-primary">
         <mat-icon>add_circle</mat-icon>
       </button>
@@ -47,11 +49,11 @@
       [cdkDropListConnectedTo]=[toDoList]
       (cdkDropListDropped)="drop2($event)">
       <div class="tasks" *ngFor="let task of testData_done.data" cdkDrag>
-        <mat-card>
+        <mat-card class="content">
           <mat-card-header>
             <mat-card-title style="color: white">{{task.name}}</mat-card-title>
           </mat-card-header>
-          <mat-card-content class="content">
+          <mat-card-content>
             <p>{{ task.status }}</p>
           </mat-card-content>
         </mat-card>

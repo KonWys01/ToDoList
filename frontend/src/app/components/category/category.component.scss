@@ -1,13 +1,20 @@
 .app-container {
   display: flex;
   height: 100%;
-  margin: 10px;
+  margin-top: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .category {
-  box-shadow: black !important;
-  border: black !important;
   margin-right: 10px;
+  width: 300px;
+  overflow: hidden;
+}
+
+.tasks-list {
+  margin-right: 10px;
+  overflow-y: auto;
 }
 
 .tasks {
@@ -17,6 +24,7 @@
 }
 
 .content {
+  background-color: dimgray !important;
   cursor: move;
 }
 
