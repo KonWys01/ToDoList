@@ -1,0 +1,41 @@
+.app-container {
+  display: flex;
+  height: 100%;
+  margin: 10px;
+}
+
+.category {
+  box-shadow: black !important;
+  border: black !important;
+  margin-right: 10px;
+}
+
+.tasks {
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-bottom: 5px;
+}
+
+.content {
+  cursor: move;
+}
+
+.cdk-drag-preview {
+  box-sizing: border-box;
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.example-box:last-child {
+  border: none;
+}
+
+.example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
