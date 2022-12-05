@@ -13,8 +13,13 @@
 }
 
 .tasks-list {
+  height: 100%;
   margin-right: 10px;
   overflow-y: auto;
+}
+
+.list {
+  height: 100%;
 }
 
 .tasks {
