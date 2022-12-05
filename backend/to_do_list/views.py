@@ -1,8 +1,11 @@
 import json
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.shortcuts import redirect
-
+from django.db.models import Exists, OuterRef
+from django.forms.models import model_to_dict
 from django.views.generic import ListView
+
+from . import models
 from .models import ToDoCategory, Task
 
 from django.views.decorators.csrf import csrf_exempt
@@ -137,3 +140,20 @@ def list_all(request):
         'category_id', 'category__status'))
     }
     return JsonResponse(result)
+
+# def list_all(request):
+#     tasks = Task.objects.filter(category=1)
+#     result = {'data': list(tasks.values())}
+#     categories = ToDoCategory.objects.all()
+#     result = {'data': list(categories.values('task'))}
+#
+#     # categories = (
+#     #     ToDoCategory.objects
+#     #     .filter(Exists(Task.objects.filter(category=OuterRef("id"))))
+#     # )
+#     # result = {'data': list(categories.values())}
+#
+#     return HttpResponse(model_to_dict(ToDoCategory, fields=[field.name for field in ToDoCategory._meta.fields]),
+#                         content_type="application/json")
+#     return model_to_dict(ToDoCategory)
+#     return JsonResponse(model_to_dict(ToDoCategory))
