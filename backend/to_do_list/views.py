@@ -134,26 +134,7 @@ def list_one_to_do_category(request, id: int):
 
 
 def list_all(request):
-    tasks = Task.objects.all()
-    result = {'data': list(tasks.values(
-        'id', 'name', 'description', 'date_creation', 'date_finish',
-        'category_id', 'category__status'))
-    }
-    return JsonResponse(result)
-
-# def list_all(request):
-#     tasks = Task.objects.filter(category=1)
-#     result = {'data': list(tasks.values())}
-#     categories = ToDoCategory.objects.all()
-#     result = {'data': list(categories.values('task'))}
-#
-#     # categories = (
-#     #     ToDoCategory.objects
-#     #     .filter(Exists(Task.objects.filter(category=OuterRef("id"))))
-#     # )
-#     # result = {'data': list(categories.values())}
-#
-#     return HttpResponse(model_to_dict(ToDoCategory, fields=[field.name for field in ToDoCategory._meta.fields]),
-#                         content_type="application/json")
-#     return model_to_dict(ToDoCategory)
-#     return JsonResponse(model_to_dict(ToDoCategory))
+    categories = {'data': list(ToDoCategory.objects.all().values())}
+    for category in categories['data']:
+        category['tasks'] = list(Task.objects.filter(category=category['id']).values())
+    return JsonResponse(categories)
