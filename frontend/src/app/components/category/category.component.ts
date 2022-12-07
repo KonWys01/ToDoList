@@ -1,8 +1,9 @@
-import {Component, ViewEncapsulation} from '@angular/core';
+import {Component, ViewEncapsulation, AfterViewInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 
 import {ConfigService} from "../../services/config.service";
+import {TaskService} from "../../services/task.service";
 
 
 @Component({
@@ -11,47 +12,15 @@ import {ConfigService} from "../../services/config.service";
   styleUrls: ['./category.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class CategoryComponent {
-  testData_to_do = {
-    "data": [
-      {
-        "id": 1,
-        "name": "Test Task",
-        "status": "To Do"
-      },
-      {
-        "id": 2,
-        "name": "Test Task v2",
-        "status": "To Do v2"
-      },
-      {
-        "id": 1,
-        "name": "Test Task v3",
-        "status": "To Do v3"
-      },
-      {
-        "id": 1,
-        "name": "Test Task v4",
-        "status": "To Do v4"
-      },
-      {
-        "id": 1,
-        "name": "Test Task v5",
-        "status": "To Do v5"
-      },
-    ]
-  }
-  testData_done = {
-    "data": [
-      {
-        "id": 4,
-        "name": "Test Task v4",
-        "status": "To Do v4"
-      },
-    ]
+export class CategoryComponent implements AfterViewInit {
+  data_to_do: any = {};
+  data_done: any = {};
+
+  constructor(public config: ConfigService, private http: HttpClient, public taskService: TaskService) {
   }
 
-  constructor(public config: ConfigService, private http: HttpClient) {
+  ngAfterViewInit(): void {
+    this.loadTasks();
   }
 
   drop2(event: CdkDragDrop<{ id: number, name: string, status: string }[]>) {
@@ -67,10 +36,13 @@ export class CategoryComponent {
     }
   }
 
-  getTasks(): void {
-    console.log(this.config.appConfig.api + this.config.appConfig.tasks);
-    console.log(this.http.get(this.config.appConfig.api + this.config.appConfig.tasks).subscribe(data => {
-      console.log(data);
-    }))
+  loadTasks(): void {
+    this.taskService.getTasksByCategory(1).subscribe((tasks) => {
+      this.data_to_do = tasks
+    });
+    this.taskService.getTasksByCategory(2).subscribe((tasks) => {
+      this.data_done = tasks
+    });
   }
+
 }

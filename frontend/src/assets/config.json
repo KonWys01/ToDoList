@@ -8,6 +8,7 @@
   "category_update": "list/update/",
   "tasks": "tasks",
   "task_id": "tasks/",
+  "task_category": "tasks/category/",
   "task_create": "tasks/create",
   "task_delete": "tasks/delete/",
   "task_update": "tasks/update/"

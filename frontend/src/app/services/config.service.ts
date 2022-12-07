@@ -14,9 +14,12 @@ export class ConfigService {
     this.loadAppConfig();
   }
 
-
   loadAppConfig() {
-    return this.http.get('/assets/config.json').subscribe((response) => this.appConfig = response);
+    return this.http.get('/assets/config.json')
+      .toPromise()
+      .then(config => {
+        this.appConfig = config;
+      });
   }
 
   get apiBaseUrl(): string {

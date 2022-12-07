@@ -1,1 +1,8 @@
-<p>task works!</p>
+<mat-card *ngIf="task" class="content">
+  <mat-card-header>
+    <mat-card-title style="color: white">{{ task.name }}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <p>{{ task.description }}</p>
+  </mat-card-content>
+</mat-card>

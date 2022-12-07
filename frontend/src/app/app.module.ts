@@ -1,4 +1,4 @@
-import {NgModule, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {NgModule, CUSTOM_ELEMENTS_SCHEMA, APP_INITIALIZER} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 
 import {MatButtonModule} from "@angular/material/button";
@@ -14,6 +14,8 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import {DragDropModule} from "@angular/cdk/drag-drop";
 import {TaskComponent} from './components/task/task.component';
 import {HttpClientModule} from "@angular/common/http";
+import {ConfigService} from "./services/config.service";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 @NgModule({
   declarations: [
@@ -31,9 +33,17 @@ import {HttpClientModule} from "@angular/common/http";
     MatToolbarModule,
     MatTooltipModule,
     DragDropModule,
-    HttpClientModule
+    HttpClientModule,
+    MatProgressSpinnerModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: APP_INITIALIZER,
+      multi: true,
+      deps: [ConfigService],
+      useFactory: (configService: ConfigService) => () => configService.loadAppConfig()
+    }
+  ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
