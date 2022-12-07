@@ -51,7 +51,7 @@ export class CategoryComponent {
     ]
   }
 
-  constructor() {
+  constructor(public config: ConfigService, private http: HttpClient) {
   }
 
   drop2(event: CdkDragDrop<{ id: number, name: string, status: string }[]>) {
