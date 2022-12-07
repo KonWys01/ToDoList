@@ -1,0 +1,14 @@
+{
+  "api": "http://localhost:8000/",
+  "all": "all",
+  "categories": "list",
+  "category_id": "list/",
+  "category_create": "list/create",
+  "category_delete": "list/delete/",
+  "category_update": "list/update/",
+  "tasks": "tasks",
+  "task_id": "tasks/",
+  "task_create": "tasks/create",
+  "task_delete": "tasks/delete/",
+  "task_update": "tasks/update/"
+}

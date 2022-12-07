@@ -1,5 +1,9 @@
 import {Component, ViewEncapsulation} from '@angular/core';
+import {HttpClient} from "@angular/common/http";
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
+
+import {ConfigService} from "../../services/config.service";
+
 
 @Component({
   selector: 'app-category',
@@ -61,5 +65,12 @@ export class CategoryComponent {
         event.currentIndex,
       );
     }
+  }
+
+  getTasks(): void {
+    console.log(this.config.appConfig.api + this.config.appConfig.tasks);
+    console.log(this.http.get(this.config.appConfig.api + this.config.appConfig.tasks).subscribe(data => {
+      console.log(data);
+    }))
   }
 }
