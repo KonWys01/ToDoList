@@ -1,35 +1,8 @@
 <div class="app-container">
-  <mat-card class="category">
+  <mat-card class="category" *ngFor="let category of categories.data">
     <mat-card-header>
       <mat-card-title style="color: white">
-        To Do
-      </mat-card-title>
-    </mat-card-header>
-    <div class="add-task-button" style="text-align: center; margin-top: 10px; margin-bottom: 10px">
-      <button mat-mini-fab matTooltip="add new task" class="btn btn-primary" (click)="loadTasks()">
-        <mat-icon>add_circle</mat-icon>
-      </button>
-    </div>
-    <!--  przeniesc calego ponizszego diva do mat-card-content, w ten sposob powinno sie bedzie dac ustawic domyslny rozmiar okna przerzucania  -->
-    <mat-card-content class="tasks-list">
-      <div
-        class="list"
-        cdkDropList
-        #toDoList="cdkDropList"
-        [cdkDropListData]="data_to_do.data"
-        [cdkDropListConnectedTo]=[doneList]
-        (cdkDropListDropped)="drop2($event)">
-        <div class="tasks" *ngFor="let task of data_to_do.data" cdkDrag>
-          <app-task [task]="task"></app-task>
-        </div>
-      </div>
-    </mat-card-content>
-  </mat-card>
-  <!--  //////////////////////////////////////////////// -->
-  <mat-card class="category">
-    <mat-card-header>
-      <mat-card-title style="color: white">
-        Done
+        {{category.name}}
       </mat-card-title>
     </mat-card-header>
     <div class="add-task-button" style="text-align: center; margin-top: 10px; margin-bottom: 10px">
@@ -38,14 +11,9 @@
       </button>
     </div>
     <mat-card-content class="tasks-list">
-      <div
-        class="list"
-        cdkDropList
-        #doneList="cdkDropList"
-        [cdkDropListData]="data_done.data"
-        [cdkDropListConnectedTo]=[toDoList]
-        (cdkDropListDropped)="drop2($event)">
-        <div class="tasks" *ngFor="let task of data_done.data" cdkDrag>
+      <div cdkDropList id="{{category.id}}" [cdkDropListData]="getCorrectTasksFromCategories(category.id)"
+           [cdkDropListConnectedTo]="categoryIDs" class="list" (cdkDropListDropped)="drop2($event)">
+        <div class="tasks" *ngFor="let task of getCorrectTasksFromCategories(category.id)" cdkDrag>
           <app-task [task]="task"></app-task>
         </div>
       </div>

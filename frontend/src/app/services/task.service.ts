@@ -15,7 +15,7 @@ export class TaskService {
   constructor(private http: HttpClient, public config: ConfigService) {
   }
 
-  getTasksByCategory(category: number): Observable<any> {
-    return this.http.get(this.config.appConfig.api + this.config.appConfig.task_category + category)
+  getTasksByCategory(): Observable<any> {
+    return this.http.get(this.config.appConfig.api + this.config.appConfig.all)
   }
 }
