@@ -6,3 +6,8 @@ export class Task {
   'date_finish': string;
   'category': number;
 }
+
+export class TaskByCategory {
+  id: number;
+  tasks: Array<Task>;
+}
