@@ -20,8 +20,8 @@ urlpatterns = [
     path('listview', ToDoCategoryListView.as_view()),
 
     path('list', list_to_do_categories, name='GET all categories'),
-    path('list/<id>', list_one_to_do_category, name='GET category'),
-    # path('list/create', create_category, name='POST category'),
+    # path('list/<id>', list_one_to_do_category, name='GET category'),
+    path('list/create', create_category, name='POST category'),
     path('list/delete/<id>', delete_category, name='DELETE category'),
     path('list/update/<id>', update_category, name='PUT edit category'),
 
