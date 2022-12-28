@@ -18,7 +18,7 @@ class Task(models.Model):
     description = models.TextField(null=True, blank=True)  # blank=True == not required
     date_creation = models.DateTimeField(auto_now_add=True)
     date_finish = models.DateTimeField(null=True, blank=True)
-    category = models.ForeignKey(ToDoCategory, on_delete=models.PROTECT)
+    category = models.ForeignKey(ToDoCategory, on_delete=models.CASCADE)
 
     class Meta:
         managed = True
