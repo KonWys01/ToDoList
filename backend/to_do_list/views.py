@@ -136,5 +136,5 @@ def list_one_to_do_category(request, id: int):
 def list_all(request):
     categories = {'data': list(ToDoCategory.objects.all().values('id'))}
     for category in categories['data']:
-        category['tasks'] = list(Task.objects.filter(category=category['id']).values())
+        category['tasks'] = list(Task.objects.filter(category=category['id']).order_by('-order').values())
     return JsonResponse(categories)
