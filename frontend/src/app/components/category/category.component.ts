@@ -38,7 +38,7 @@ export class CategoryComponent implements AfterViewInit, OnInit {
   drop2(event: CdkDragDrop<Task[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-      this.orderInGivenCategory(event.container);
+      this.orderInsideCategory(event.container);
     } else {
       transferArrayItem(
         event.previousContainer.data,
@@ -46,7 +46,7 @@ export class CategoryComponent implements AfterViewInit, OnInit {
         event.previousIndex,
         event.currentIndex,
       );
-      this.orderInGivenCategory(event.previousContainer);
+      this.orderInsideCategory(event.previousContainer);
       this.moveTask(event.container.data[event.currentIndex], event.container);
     }
   }
@@ -68,19 +68,29 @@ export class CategoryComponent implements AfterViewInit, OnInit {
     })
   }
 
-  orderInGivenCategory(category: CdkDropList): void {
+  orderInsideCategory(category: CdkDropList): void {
+    const body: TaskOrder = this.makeOrderBody(category);
+    this.taskService.orderTasks(body).subscribe();
+  }
+
+  orderOutsideCategory(category: CdkDropList): void {
+    const body: TaskOrder = this.makeOrderBody(category);
+    this.taskService.orderTasks(body).subscribe(_ => {
+      this.loadTasks();
+    });
+  }
+
+  makeOrderBody(category: CdkDropList): TaskOrder {
     const data = category.data;
     let ids: number[] = [];
     data.forEach((task: Task) => {
       ids.push(task.id)
     })
 
-    let body: TaskOrder = {
+    return {
       category: Number(category.id),
       id: ids
     };
-
-    this.taskService.orderTasks(body).subscribe();
   }
 
   moveTask(task: Task, category: CdkDropList): void {
@@ -89,7 +99,7 @@ export class CategoryComponent implements AfterViewInit, OnInit {
     }
 
     this.taskService.updateTask(task.id, body).subscribe(_ => {
-      this.orderInGivenCategory(category)
+      this.orderOutsideCategory(category)
     });
   }
 

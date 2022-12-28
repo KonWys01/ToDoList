@@ -16,6 +16,7 @@ import {TaskComponent} from './components/task/task.component';
 import {HttpClientModule} from "@angular/common/http";
 import {ConfigService} from "./services/config.service";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
     MatTooltipModule,
     DragDropModule,
     HttpClientModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatCheckboxModule
   ],
   providers: [
     {

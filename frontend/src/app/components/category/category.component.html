@@ -14,7 +14,7 @@
       <div cdkDropList id="{{category.id}}" [cdkDropListData]="getCorrectTasksFromCategories(category.id)"
            [cdkDropListConnectedTo]="categoryIDs" class="list" (cdkDropListDropped)="drop2($event)">
         <div class="tasks" *ngFor="let task of getCorrectTasksFromCategories(category.id)" cdkDrag>
-          <app-task [task]="task"></app-task>
+          <app-task [task]="task" [done_category_id]="category.name == 'Done' ? category.id : 0"></app-task>
         </div>
       </div>
     </mat-card-content>

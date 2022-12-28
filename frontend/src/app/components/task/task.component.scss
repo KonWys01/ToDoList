@@ -1,4 +1,28 @@
-.content {
+.card {
   background-color: dimgray !important;
   cursor: move;
+  padding: 6px;
+
+  .header, .content {
+    padding: 6px;
+  }
+}
+
+.titles {
+  width: 80%;
+}
+
+.checkbox {
+  position: absolute;
+  right: 5px;
+}
+
+.subtitle {
+  font-size: 10px !important;
+}
+
+.content {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+  color: white;
 }

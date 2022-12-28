@@ -4,7 +4,7 @@ export class Task {
   'description': string;
   'date_creation': string;
   'date_finish': string;
-  'category': number;
+  'category_id': number;
 }
 
 export class TaskByCategory {

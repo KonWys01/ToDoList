@@ -1,8 +1,10 @@
-<mat-card *ngIf="task" class="content">
-  <mat-card-header>
+<mat-card *ngIf="task" class="card">
+  <mat-card-header class="header">
     <mat-card-title style="color: white">{{ task.name }}</mat-card-title>
+    <mat-checkbox class="checkbox" disabled [checked]="task.category_id == done_category_id"></mat-checkbox>
+    <mat-card-subtitle class="subtitle">{{ task.date_creation | date:'medium' }}</mat-card-subtitle>
   </mat-card-header>
-  <mat-card-content>
+  <mat-card-content class="content">
     <p>{{ task.description }}</p>
   </mat-card-content>
 </mat-card>
