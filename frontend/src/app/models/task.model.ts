@@ -11,3 +11,8 @@ export class TaskByCategory {
   id: number;
   tasks: Array<Task>;
 }
+
+export class TaskOrder {
+  category: number;
+  id: number[];
+}

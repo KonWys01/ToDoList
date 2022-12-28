@@ -1,12 +1,12 @@
 import {Component, ViewEncapsulation, AfterViewInit, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
+import {CdkDragDrop, CdkDropList, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 
 import {ConfigService} from "../../services/config.service";
 import {TaskService} from "../../services/task.service";
 import {CategoryService} from "../../services/category.service";
 import {Category} from "../../models/category.model";
-import {TaskByCategory, Task} from "../../models/task.model";
+import {TaskByCategory, Task, TaskOrder} from "../../models/task.model";
 
 
 @Component({
@@ -38,6 +38,7 @@ export class CategoryComponent implements AfterViewInit, OnInit {
   drop2(event: CdkDragDrop<Task[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+      this.orderInGivenCategory(event.container);
     } else {
       transferArrayItem(
         event.previousContainer.data,
@@ -63,6 +64,21 @@ export class CategoryComponent implements AfterViewInit, OnInit {
       this.categories = categories;
       this.categoryIDs = this.categories.data.map((item: Category) => String(item.id))
     })
+  }
+
+  orderInGivenCategory(category: CdkDropList): void {
+    const data = category.data;
+    let ids: number[] = [];
+    data.forEach((task: Task) => {
+      ids.push(task.id)
+    })
+
+    let body: TaskOrder = {
+      category: Number(category.id),
+      id: ids
+    };
+
+    this.taskService.orderTasks(body).subscribe();
   }
 
 }

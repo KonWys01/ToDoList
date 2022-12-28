@@ -11,5 +11,6 @@
   "task_category": "tasks/category/",
   "task_create": "tasks/create",
   "task_delete": "tasks/delete/",
-  "task_update": "tasks/update/"
+  "task_update": "tasks/update/",
+  "order": "order"
 }
