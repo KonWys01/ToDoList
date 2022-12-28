@@ -138,3 +138,18 @@ def list_all(request):
     for category in categories['data']:
         category['tasks'] = list(Task.objects.filter(category=category['id']).order_by('-order').values())
     return JsonResponse(categories)
+
+
+@csrf_exempt
+def update_task_order(request):
+    if request.method == "PUT":
+        body = get_body_from_request(request)
+        category = body['category']
+        all_task_ids = body['id']
+        in_category = Task.objects.filter(category=category).all()
+        max_order = in_category.latest('order').order
+        for task_id in all_task_ids:
+            Task.objects.filter(id=task_id).update(order=max_order)
+            if max_order > 0:
+                max_order = max_order - 1
+        return redirect('/list')

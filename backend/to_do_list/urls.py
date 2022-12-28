@@ -13,6 +13,7 @@ from .views import (
     delete_task,
     update_task,
     get_tasks_by_category,
+    update_task_order,
     ToDoCategoryListView
 )
 
@@ -33,4 +34,5 @@ urlpatterns = [
     path('tasks/update/<id>', update_task, name='PUT edit task'),
 
     path('all', list_all, name='GET all tasks with categories'),
+    path('order', update_task_order, name='PUT update task order in given category'),
 ]
