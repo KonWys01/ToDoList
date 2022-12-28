@@ -6,7 +6,7 @@ import {ConfigService} from "../../services/config.service";
 import {TaskService} from "../../services/task.service";
 import {CategoryService} from "../../services/category.service";
 import {Category} from "../../models/category.model";
-import {TaskByCategory, Task, TaskOrder} from "../../models/task.model";
+import {TaskByCategory, Task, TaskOrder, TaskEdit} from "../../models/task.model";
 
 
 @Component({
@@ -46,6 +46,8 @@ export class CategoryComponent implements AfterViewInit, OnInit {
         event.previousIndex,
         event.currentIndex,
       );
+      this.orderInGivenCategory(event.previousContainer);
+      this.moveTask(event.container.data[event.currentIndex], event.container);
     }
   }
 
@@ -79,6 +81,16 @@ export class CategoryComponent implements AfterViewInit, OnInit {
     };
 
     this.taskService.orderTasks(body).subscribe();
+  }
+
+  moveTask(task: Task, category: CdkDropList): void {
+    let body: TaskEdit = {
+      category: Number(category.id)
+    }
+
+    this.taskService.updateTask(task.id, body).subscribe(_ => {
+      this.orderInGivenCategory(category)
+    });
   }
 
 }

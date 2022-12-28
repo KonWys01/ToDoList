@@ -16,3 +16,9 @@ export class TaskOrder {
   category: number;
   id: number[];
 }
+
+export class TaskEdit {
+  name?: string;
+  description?: string;
+  category: number;
+}

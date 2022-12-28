@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 
 import {Observable} from "rxjs";
 
-import {Task, TaskOrder} from "../models/task.model";
+import {Task, TaskEdit, TaskOrder} from "../models/task.model";
 import {ConfigService} from "./config.service";
 
 
@@ -21,5 +21,9 @@ export class TaskService {
 
   orderTasks(body: TaskOrder): Observable<any> {
     return this.http.put(this.config.appConfig.api + this.config.appConfig.order, body)
+  }
+
+  updateTask(id: number, body: TaskEdit): Observable<any> {
+    return this.http.put(this.config.appConfig.api + this.config.appConfig.task_update + id, body)
   }
 }
