@@ -92,7 +92,7 @@ def get_tasks_by_category(request, id: int):
 
 
 def list_to_do_categories(request):
-    content = ToDoCategory.objects.all()
+    content = ToDoCategory.objects.all().order_by('id')
     result = {'data': list(content.values())}
     return JsonResponse(result)
 
