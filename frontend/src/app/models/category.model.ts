@@ -3,3 +3,8 @@ export class Category {
   'name': string;
   'status': string;
 }
+
+export class MatDataCategory {
+  categories: Category[];
+  categoryNames: string[];
+}

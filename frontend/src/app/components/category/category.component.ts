@@ -2,11 +2,14 @@ import {Component, ViewEncapsulation, AfterViewInit, OnInit} from '@angular/core
 import {HttpClient} from "@angular/common/http";
 import {CdkDragDrop, CdkDropList, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 
+import {MatDialog} from '@angular/material/dialog';
+
 import {ConfigService} from "../../services/config.service";
 import {TaskService} from "../../services/task.service";
 import {CategoryService} from "../../services/category.service";
 import {Category} from "../../models/category.model";
 import {TaskByCategory, Task, TaskOrder, TaskEdit} from "../../models/task.model";
+import {TaskAddComponent} from "../task/task-add/task-add.component";
 
 
 @Component({
@@ -18,13 +21,15 @@ import {TaskByCategory, Task, TaskOrder, TaskEdit} from "../../models/task.model
 export class CategoryComponent implements AfterViewInit, OnInit {
   categories: any = {};
   categoryIDs: string[] = [];
+  categoryNames: string[] = [];
   tasksByCategory: TaskByCategory[] = [];
 
   constructor(
     public config: ConfigService,
     private http: HttpClient,
     public taskService: TaskService,
-    private categoryService: CategoryService) {
+    private categoryService: CategoryService,
+    public dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -64,7 +69,8 @@ export class CategoryComponent implements AfterViewInit, OnInit {
   loadCategories(): void {
     this.categoryService.getCategories().subscribe((categories) => {
       this.categories = categories;
-      this.categoryIDs = this.categories.data.map((item: Category) => String(item.id))
+      this.categoryIDs = this.categories.data.map((item: Category) => String(item.id));
+      this.categoryNames = this.categories.data.map((item: Category) => item.name);
     })
   }
 
@@ -100,6 +106,17 @@ export class CategoryComponent implements AfterViewInit, OnInit {
 
     this.taskService.updateTask(task.id, body).subscribe(_ => {
       this.orderOutsideCategory(category)
+    });
+  }
+
+  openAddDialog(): void {
+    this.dialog.open(TaskAddComponent, {
+      height: '400px',
+      width: '600px',
+      data: {
+        categories: this.categories.data,
+        categoryNames: this.categoryNames
+      }
     });
   }
 

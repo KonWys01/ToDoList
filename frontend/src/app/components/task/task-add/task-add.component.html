@@ -1,0 +1,24 @@
+<!--<p style="color: white">Name - small field</p>-->
+<!--<p style="color: white">Description - huge field</p>-->
+<!--<p style="color: white">Category - rozwijana lista do wyboru!</p>-->
+<!--<p style="color: white">Domyslnie ma byc wybrana kolumna, z ktorej zostal nacisniety przycisk</p>-->
+<div class="container">
+  <form [formGroup]="form" class="form-div">
+    <mat-form-field appearance="fill" class="mat-input">
+      <mat-label>Name</mat-label>
+      <input matInput type="text" formControlName="name">
+    </mat-form-field>
+    <mat-form-field class="mat-input">
+      <mat-label>Description</mat-label>
+      <textarea matInput type="text" formControlName="description"></textarea>
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="mat-input">
+      <mat-label>Select me</mat-label>
+      <mat-select [(value)]="data.categoryNames">
+        <mat-option *ngFor="let category of data.categories" [value]="category.name">
+          {{ category.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+</div>
